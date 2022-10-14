@@ -17,43 +17,28 @@ CGRAPH_NAMESPACE_BEGIN
 
 class GAspect : public GAspectObject {
 public:
-    /**
-     * init()函数切面开始期间动作
-     */
+    // init()函数切面开始期间动作
     virtual CStatus beginInit() {
         CGRAPH_EMPTY_FUNCTION
     }
 
-    /**
-     * init()函数切面结束期间动作
-     * @param curStatus
-     */
+    // init()函数切面结束期间动作
     virtual CVoid finishInit(const CStatus& curStatus) {}
 
-    /**
-     * run()函数切面开始期间动作
-     */
+    // run()函数切面开始期间动作
     virtual CStatus beginRun() {
         CGRAPH_EMPTY_FUNCTION
     }
 
-    /**
-     * run()函数切面结束期间动作
-     * @param curStatus
-     */
+    // run()函数切面结束期间动作
     virtual CVoid finishRun(const CStatus& curStatus) {}
 
-    /**
-     * destroy()函数切面开始期间动作
-     */
+    // destroy()函数切面开始期间动作
     virtual CStatus beginDestroy() {
         CGRAPH_EMPTY_FUNCTION
     }
 
-    /**
-     * destroy()函数切面结束期间动作
-     * @param curStatus
-     */
+    //  destroy()函数切面结束期间动作
     virtual CVoid finishDestroy(const CStatus& curStatus) {}
 };
 

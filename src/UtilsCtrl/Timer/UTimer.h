@@ -21,11 +21,7 @@ public:
         stop();
     }
 
-    /**
-     * 开始执行定时器
-     * @param interval 间隔时间，单位ms
-     * @param task
-     */
+    // 开始执行定时器
     template<typename FunctionType>
     CVoid start(CMSec interval, const FunctionType& task) {
         if (!is_stop_) {
@@ -33,11 +29,7 @@ public:
         }
 
         is_stop_ = false;
-        /**
-         * std::launch::async：在调用async就开始创建线程。
-         * std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。
-         * 后期会考虑将这个功能融合到线程池中去
-         */
+        // std::launch::async：在调用async就开始创建线程。std::launch::deferred：延迟加载方式创建线程。调用async时不创建线程，直到调用了future的get或者wait时才创建线程。
         future_ = std::async(std::launch::async, [this, interval, task]() {
              while (!is_stop_) {
                  CGRAPH_UNIQUE_LOCK lk(mutex_);
@@ -49,9 +41,7 @@ public:
         });
     }
 
-    /**
-     * 关闭定时器
-     */
+    // 关闭定时器
     CVoid stop() {
         if (is_stop_) {
             return;

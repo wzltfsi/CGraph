@@ -19,28 +19,16 @@ public:
     explicit UTrie();
     ~UTrie() override;
 
-    /**
-     * 插入路径信息
-     * @param path
-     */
+    // 插入路径信息
     void insert(const std::string& path);
 
-    /**
-     * 查询路径信息
-     * @param path
-     * @return
-     */
+    //  查询路径信息
     bool find(const std::string& path);
 
-    /**
-     * 清空全部路径信息
-     */
+    // 清空全部路径信息
     void clear();
 
-    /**
-     * 删除路径信息
-     * @param path
-     */
+    //删除路径信息
     void eraser(const std::string& path);
 
 protected:

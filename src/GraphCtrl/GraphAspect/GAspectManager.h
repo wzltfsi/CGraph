@@ -23,18 +23,13 @@ public:
         clear();
     }
 
-    /**
-     * 执行切面逻辑
-     */
+    // 执行切面逻辑
     CStatus reflect(const GAspectType& type, const CStatus& curStatus = CStatus()) {
         CGRAPH_FUNCTION_BEGIN
 
         for (GAspectPtr aspect : aspect_arr_) {
             switch (type) {
-                /**
-                 * 仅针对Begin对应的内容，进行返回值判断
-                 * run()方法切面更容易被执行，故放在最前方判断
-                 */
+                // 仅针对Begin对应的内容，进行返回值判断, run()方法切面更容易被执行，故放在最前方判断
                 case GAspectType::BEGIN_RUN : status = aspect->beginRun(); break;
                 case GAspectType::FINISH_RUN : aspect->finishRun(curStatus); break;
                 case GAspectType::BEGIN_INIT : status = aspect->beginInit(); break;
@@ -50,11 +45,7 @@ public:
         CGRAPH_FUNCTION_END
     }
 
-    /**
-     * 添加切面信息
-     * @param aspect
-     * @return
-     */
+    // 添加切面信息
     CStatus add(GAspectPtr aspect) override {
         CGRAPH_FUNCTION_BEGIN
         CGRAPH_ASSERT_NOT_NULL(aspect)
@@ -63,11 +54,7 @@ public:
         CGRAPH_FUNCTION_END
     }
 
-    /**
-     * 设置name信息
-     * @param name
-     * @return
-     */
+    // 设置name信息
     GAspectManager* setName(const std::string& name) override {
         for (GAspectPtr aspect : aspect_arr_) {
             CGRAPH_ASSERT_NOT_NULL_RETURN_NULL(aspect)
@@ -77,19 +64,13 @@ public:
         return this;
     }
 
-    /**
-     * 获取切面个数信息
-     * @return
-     */
+    // 获取切面个数信息
     [[nodiscard]] CSize getSize() const override {
         auto size = aspect_arr_.size();
         return size;
     }
 
-    /**
-     * 清空切面信息
-     * @return
-     */
+    // 清空切面信息
     CStatus clear() final {
         CGRAPH_FUNCTION_BEGIN
         for (GAspectPtr aspect : aspect_arr_) {

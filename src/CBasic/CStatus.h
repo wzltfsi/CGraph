@@ -15,9 +15,9 @@
 
 CGRAPH_NAMESPACE_BEGIN
 
-static const int STATUS_OK = 0;                                 /** 正常流程返回值 */
-static const int STATUS_ERR = -1;                               /** 异常流程返回值 */
-static const char* STATUS_ERROR_INFO_CONNECTOR = " && ";        /** 多异常信息连接符号 */
+static const int   STATUS_OK = 0;                           /** 正常流程返回值 */
+static const int   STATUS_ERR = -1;                         /** 异常流程返回值 */
+static const char* STATUS_ERROR_INFO_CONNECTOR = " && ";    /** 多异常信息连接符号 */
 
 class CSTATUS {
 public:
@@ -74,18 +74,13 @@ public:
         return this->error_info_;
     }
 
-    /**
-     * 判断当前状态是否可行
-     * @return
-     */
+ 
+    // 判断当前状态是否可行
     [[nodiscard]] bool isOK() const {
         return STATUS_OK == error_code_;
     }
 
-    /**
-     * 判断当前状态是否可行
-     * @return
-     */
+    // 判断当前状态是否可行
     [[nodiscard]] bool isErr() const {
         return error_code_ < STATUS_OK;    // 约定异常信息，均为负值
     }

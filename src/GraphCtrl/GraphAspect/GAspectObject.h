@@ -23,72 +23,45 @@ public:
         CGRAPH_DELETE_PTR(param_)
     }
 
-    /**
-     * 获取name信息
-     * @return
-     */
+    // 获取name信息
     virtual const std::string& getName() final {
         return name_;
     }
 
-    /**
-     * 获取切面参数内容
-     * @return
-     */
-    template <typename T,
-              std::enable_if_t<std::is_base_of<GAspectParam, T>::value, int> = 0>
+    // 获取切面参数内容
+    template <typename T,  std::enable_if_t<std::is_base_of<GAspectParam, T>::value, int> = 0>
     T* getAParam();
 
-    /**
-     * 设置切面参数内容
-     * @param param
-     */
-    template <typename T,
-              std::enable_if_t<std::is_base_of<GAspectParam, T>::value, int> = 0>
+    // 设置切面参数内容
+    template <typename T, std::enable_if_t<std::is_base_of<GAspectParam, T>::value, int> = 0>
     GAspectObject* setAParam(T* param);
 
-    /**
-     * 获取pipeline中的参数信息
-     * @tparam T
-     * @param key
-     * @return
-     */
-    template <typename T,
-              std::enable_if_t<std::is_base_of<GParam, T>::value, int> = 0>
+    // 获取pipeline中的参数信息
+    template <typename T,  std::enable_if_t<std::is_base_of<GParam, T>::value, int> = 0>
     T* getGParam(const std::string& key);
 
 protected:
-    /**
-     * 设置名称
-     * @param name
-     */
+    // 设置名称
     virtual GAspectObject* setName(const std::string& name) {
         this->name_ = name;
         return this;
     }
 
-    /**
-     * 设置pipeline中相关的参数信息
-     * @param pm
-     * @return
-     */
+    // 设置pipeline中相关的参数信息
     virtual GAspectObject* setPipelineParamManager(GParamManagerPtr pm) {
         pipeline_param_manager_ = pm;
         return this;
     }
 
-    /**
-     * GAspect 相关内容，不需要执行run方法
-     * @return
-     */
+    // GAspect 相关内容，不需要执行run方法
     CStatus run() final {
         CGRAPH_NO_SUPPORT
     }
 
 private:
-    std::string name_;                                        // 切面类名称，跟 element 名称保持相同
-    GAspectParamPtr param_ { nullptr };                       // 参数信息
-    GParamManagerPtr pipeline_param_manager_ { nullptr };     // 对应 pipeline 中参数管理器
+    std::string      name_;                                  // 切面类名称，跟 element 名称保持相同
+    GAspectParamPtr  param_ { nullptr };                     // 参数信息
+    GParamManagerPtr pipeline_param_manager_ { nullptr };    // 对应 pipeline 中参数管理器
 
     friend class GAspectManager;
     friend class GElement;

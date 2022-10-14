@@ -22,18 +22,11 @@ CGRAPH_NAMESPACE_BEGIN
 
 static std::mutex g_session_mtx;
 
-/**
- * 仅用于生成CObject类型的类
- */
+//  仅用于生成CObject类型的类
 class UAllocator : public CObject {
 public:
-    /**
-     * 生成普通指针信息
-     * @tparam T
-     * @return
-     */
-    template<typename T,
-            std::enable_if_t<std::is_base_of<CObject, T>::value, int> = 0>
+    // 生成普通指针信息
+    template<typename T,  std::enable_if_t<std::is_base_of<CObject, T>::value, int> = 0>
     static T* safeMallocCObject() {
         T* ptr = nullptr;
         while (!ptr) {
@@ -43,11 +36,7 @@ public:
     }
 
 
-    /**
-     * 生成unique智能指针信息
-     * @tparam T
-     * @return
-     */
+    // 生成unique智能指针信息
     template<typename T,
             std::enable_if_t<std::is_base_of<CObject, T>::value, int> = 0>
     static std::unique_ptr<T> makeUniqueCObject() {
@@ -55,10 +44,7 @@ public:
     }
 
 
-    /**
-     * 生成唯一标识信息
-     * @return
-     */
+    //  生成唯一标识信息
     static std::string generateSession() {
         #ifdef _GENERATE_SESSION_
                 std::lock_guard<std::mutex> lock{ g_session_mtx };

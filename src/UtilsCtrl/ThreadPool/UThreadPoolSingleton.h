@@ -17,11 +17,7 @@ CGRAPH_NAMESPACE_BEGIN
 
 class UThreadPoolSingleton : public UThreadObject {
 public:
-    /**
-     * 获取线程池指针内容
-     * @param autoInit 自动初始化单例线程池信息
-     * @return
-     */
+    // 获取线程池指针内容
     static UThreadPoolPtr get(bool autoInit = true);
 
 private:

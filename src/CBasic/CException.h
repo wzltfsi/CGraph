@@ -22,16 +22,13 @@ public:
         info_ = info.empty() ? CGRAPH_BASIC_EXCEPTION : info;
     }
 
-    /**
-     * 获取异常信息
-     * @return
-     */
+    // 获取异常信息
     [[nodiscard]] const char* what() const noexcept override {
         return info_.c_str();
     }
 
 private:
-    std::string info_;            // 异常状态信息
+    std::string info_;    // 异常状态信息
 };
 
 CGRAPH_NAMESPACE_END
