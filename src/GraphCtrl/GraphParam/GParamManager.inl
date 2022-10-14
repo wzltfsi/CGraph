@@ -32,8 +32,7 @@ CStatus GParamManager::create(const std::string& key) {
 }
 
 
-template<typename T,
-        std::enable_if_t<std::is_base_of<GParam, T>::value, int>>
+template<typename T, std::enable_if_t<std::is_base_of<GParam, T>::value, int>>
 T* GParamManager::get(const std::string& key) {
     auto result = params_map_.find(key);
     if (result == params_map_.end()) {

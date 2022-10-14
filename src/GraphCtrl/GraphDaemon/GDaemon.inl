@@ -11,7 +11,8 @@
 
 CGRAPH_NAMESPACE_BEGIN
 
-template <typename T,   std::enable_if_t<std::is_base_of<GParam, T>::value, int>>
+//  GDaemon::getGParam
+template <typename T , std::enable_if_t<std::is_base_of<GParam, T>::value, int>>
 T* GDaemon::getGParam(const std::string &key) {
     CGRAPH_ASSERT_NOT_NULL_RETURN_NULL(pipeline_param_manager_)
 
@@ -19,6 +20,8 @@ T* GDaemon::getGParam(const std::string &key) {
     return ptr;
 }
 
+
+// GDaemon::setDParam
 template <typename DParam,  std::enable_if_t<std::is_base_of<GDaemonParam, DParam>::value, int>>
 GDaemonPtr GDaemon::setDParam(DParam* param) {
     if (param) {

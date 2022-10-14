@@ -16,11 +16,7 @@ CGRAPH_NAMESPACE_BEGIN
 class GPassedDefaultParam final : public GPassedParam {
 
 protected:
-    /**
-     * 针对原生类型的实现
-     * 目的是防止无法生成默认类型的 GAspectParam 参数
-     * 无任何实意，不支持继承
-     */
+    // 针对原生类型的实现, 目的是防止无法生成默认类型的 GAspectParam 参数, 无任何实意，不支持继承
     CVoid clone(GPassedParamPtr param) final {
     }
 };

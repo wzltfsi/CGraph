@@ -17,7 +17,7 @@ CStatus GNode::doDetach(const Func&& func, Args&&... args) {
     UThreadPoolPtr tp = UThreadPoolSingleton::get(false);
     CGRAPH_ASSERT_NOT_NULL(tp)
 
-    tp->commit(std::bind(func, std::forward<Args>(args)...));
+    tp->commit(std::bind(func, std::forward<Args>(args)...)); // threadpool->commit 
     CGRAPH_FUNCTION_END
 }
 

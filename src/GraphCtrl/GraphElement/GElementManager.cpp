@@ -102,7 +102,7 @@ CStatus GElementManager::preRunCheck() {
         CGRAPH_ASSERT_NOT_NULL(element)
     }
 
-    /**
+    /*
      * 认定图可以连通的判定条件：
      * 1，当前节点仅有一个依赖
      * 2，当前节点依赖的节点，只有一个后继
@@ -123,7 +123,7 @@ CStatus GElementManager::preRunCheck() {
 CStatus GElementManager::analyse() {
     CGRAPH_FUNCTION_BEGIN
 
-    CSize runElementSize = 0;
+    CSize runElementSize  = 0;
     auto totalElementSize = manager_elements_.size();
     para_cluster_arrs_.clear();
 
@@ -138,8 +138,7 @@ CStatus GElementManager::analyse() {
         curCluster.addElement(curElement);
 
         /* 将linkable的节点，统一放到一个cluster中 */
-        while (1 == curElement->run_before_.size()
-               && (*curElement->run_before_.begin())->isLinkable()) {
+        while (1 == curElement->run_before_.size() && (*curElement->run_before_.begin())->isLinkable()) {
             // 将下一个放到cluster中处理
             curElement = (*curElement->run_before_.begin());
             curCluster.addElement(curElement);
@@ -174,8 +173,7 @@ CStatus GElementManager::analyse() {
                         curCluster.addElement(curElement);
                         duplications.insert(curElement);
 
-                        while (1 == curElement->run_before_.size()
-                               && (*curElement->run_before_.begin())->isLinkable()) {
+                        while (1 == curElement->run_before_.size()    && (*curElement->run_before_.begin())->isLinkable()) {
                             curElement = (*curElement->run_before_.begin());
                             curCluster.addElement(curElement);
                             duplications.insert(curElement);

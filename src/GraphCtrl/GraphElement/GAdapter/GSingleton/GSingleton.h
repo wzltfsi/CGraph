@@ -18,9 +18,9 @@ CGRAPH_NAMESPACE_BEGIN
 template<typename T>
 class GSingleton : public GAdapter {
 protected:
-    CStatus init() override;
-    CStatus run() override;
-    CStatus destroy() override;
+    CStatus init()     override;
+    CStatus run()      override;
+    CStatus destroy()  override;
 
     // 适配singleton信息
     CStatus setElementInfo(const std::set<GElementPtr> &dependElements,

@@ -48,8 +48,7 @@ CStatus GCondition::run() {
     CGRAPH_FUNCTION_BEGIN
 
     CIndex index = this->choose();
-    if (GROUP_LAST_ELEMENT_INDEX == index
-        && !this->condition_elements_.empty()) {
+    if (GROUP_LAST_ELEMENT_INDEX == index  && !this->condition_elements_.empty()) {
         // 如果返回-1，则直接执行最后一个条件（模仿default功能）
         auto element = condition_elements_.back();
         status = element->fatProcessor(CFunctionType::RUN);

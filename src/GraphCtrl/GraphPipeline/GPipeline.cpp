@@ -13,8 +13,8 @@ CGRAPH_NAMESPACE_BEGIN
 GPipeline::GPipeline() {
     thread_pool_ = UThreadPoolSingleton::get();
     element_manager_ = CGRAPH_SAFE_MALLOC_COBJECT(GElementManager)
-    param_manager_ = CGRAPH_SAFE_MALLOC_COBJECT(GParamManager)
-    daemon_manager_ = CGRAPH_SAFE_MALLOC_COBJECT(GDaemonManager)
+    param_manager_   = CGRAPH_SAFE_MALLOC_COBJECT(GParamManager)
+    daemon_manager_  = CGRAPH_SAFE_MALLOC_COBJECT(GDaemonManager)
     is_init_ = false;
 }
 

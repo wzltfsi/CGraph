@@ -15,18 +15,10 @@ CGRAPH_NAMESPACE_BEGIN
 
 class GCondition : public GGroup {
 protected:
-    /**
-     * 计算需要返回第n个信息
-     * 执行最后一个，返回-1即可。
-     * 超出-1和size之间的范围，则不执行
-     * @return
-     */
+    //计算需要返回第n个信息 ,  执行最后一个，返回-1即可。 超出-1和size之间的范围，则不执行
     virtual CIndex choose() = 0;
 
-    /**
-     * 获取当前condition组内部元素的个数
-     * @return
-     */
+    // 获取当前condition组内部元素的个数
     CSize getRange() const;
 
 private:

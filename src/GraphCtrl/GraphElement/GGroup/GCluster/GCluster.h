@@ -35,16 +35,11 @@ protected:
 
     CStatus addElement(GElementPtr element) final;
 
-    /**
-     * 获取element个数信息
-     * @return
-     */
+    //  获取element个数信息
     CSize getElementNum();
 
-    /**
-     * 判断是否所有element均执行结束了
-     * @return
-     */
+    
+    //  判断是否所有element均执行结束了
     CBool isElementsDone();
 
 private:

@@ -51,7 +51,7 @@ static const CMSec CGRAPH_MAX_BLOCK_TTL = 10000000;                             
 static const int CGRAPH_DEFAULT_TASK_STRATEGY = -1;                                         // 默认线程调度策略
 static const int CGRAPH_LONG_TIME_TASK_STRATEGY = -101;                                     // 长时间任务调度策略
 
-/**
+/**w
  * 以下为线程池配置信息
  */
 static const int CGRAPH_DEFAULT_THREAD_SIZE = 8;                                            // 默认主线程个数

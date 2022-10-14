@@ -17,13 +17,7 @@ CGRAPH_NAMESPACE_BEGIN
 
 class GElementSorter : public GraphObject {
 public:
-    /**
-     * 当level不同的时候，level值小的element优先被init和destroy
-     * 默认情况下， init和destroy顺序随机
-     * @param a
-     * @param b
-     * @return
-     */
+    // 当level不同的时候，level 值小的 element 优先被 init 和 destroy , 默认情况下， init和destroy顺序随机
     CBool operator()(GElementPtr a, GElementPtr b) const {
         return (a->level_ == b->level_) ? (a < b) : (a->level_ < b->level_);
     }

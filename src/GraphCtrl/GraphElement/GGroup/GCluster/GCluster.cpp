@@ -129,18 +129,17 @@ CStatus GCluster::addElement(GElementPtr element) {
 }
 
 
+// 获取element个数信息
 CSize GCluster::getElementNum() {
     auto num = cluster_elements_.size();
     return num;
 }
 
 
+// 判断是否所有element均执行结束了
 CBool GCluster::isElementsDone() {
     /* 所有的element均被执行过，则提示true */
-    return std::all_of(cluster_elements_.begin(), cluster_elements_.end(),
-                       [](GElementPtr element) {
-                           return element->done_;
-                       });
+    return std::all_of(cluster_elements_.begin(), cluster_elements_.end(), [](GElementPtr element) {  return element->done_;});
 }
 
 CGRAPH_NAMESPACE_END

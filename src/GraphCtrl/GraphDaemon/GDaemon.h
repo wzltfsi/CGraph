@@ -21,39 +21,26 @@ class GDaemon : public GDaemonObject {
 protected:
     ~GDaemon() override;
 
-    /**
-     * 后台执行函数，间隔interval时间后，执行一次
-     */
+
+    //  后台执行函数，间隔interval时间后，执行一次
     virtual CVoid daemonTask(GDaemonParamPtr param) = 0;
 
-    /**
-     * 获取设置的延时信息
-     * @return
-     */
+
+    //  获取设置的延时信息
     [[nodiscard]] CMSec getInterval() const;
 
-    /**
-     * 获取参数信息
-     * @tparam T
-     * @param key
-     * @return
-     */
-    template <typename T,
-            std::enable_if_t<std::is_base_of<GParam, T>::value, int> = 0>
+
+    // 获取参数信息
+    template <typename T, std::enable_if_t<std::is_base_of<GParam, T>::value, int> = 0>
     T* getGParam(const std::string& key);
 
-    /**
-     * 设置daemon中参数，类型为GDaemonParam (即：GPassedParam)
-     * @tparam T
-     * @param param
-     * @return
-     */
-    template <typename DParam,
-            std::enable_if_t<std::is_base_of<GDaemonParam, DParam>::value, int> = 0>
+
+    // 设置daemon中参数，类型为GDaemonParam (即：GPassedParam)
+    template <typename DParam,  std::enable_if_t<std::is_base_of<GDaemonParam, DParam>::value, int> = 0>
     GDaemon* setDParam(DParam* param);
 
 private:
-    CStatus init() final;
+    CStatus init()    final;
     CStatus destroy() final;
 
     friend class GDaemonManager;

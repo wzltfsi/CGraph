@@ -17,26 +17,20 @@ CGRAPH_NAMESPACE_BEGIN
 
 class GPassedParam : public GParamObject {
 public:
-    /**
-     * 所有的 GPassedParam 类型，内部需要实现一个 clone 方法
-     * 将外部函数传到内部，如aspect和daemon
-     * @param param
-     */
+    
+    // 所有的 GPassedParam 类型，内部需要实现一个 clone 方法. 将外部函数传到内部，如aspect和daemon
     virtual CVoid clone(GPassedParam* param) = 0;
 };
 
 
-/**
- * 这种类型的参数，可以用于aspect和daemon中，方便参数传递
- * 不同的地方，用不同的名字，对应的内容是同一个
- */
-using GAspectParam = GPassedParam;
-using GDaemonParam = GPassedParam;
-using GElementParam = GPassedParam;
-using GPassedParamPtr = GPassedParam *;
-using GAspectParamPtr = GAspectParam *;
-using GDaemonParamPtr = GDaemonParam *;
-using GElementParamPtr = GElementParam *;
+// 这种类型的参数，可以用于aspect和daemon中，方便参数传递 , 不同的地方，用不同的名字，对应的内容是同一个
+using GAspectParam      = GPassedParam;
+using GDaemonParam      = GPassedParam;
+using GElementParam     = GPassedParam;
+using GPassedParamPtr   = GPassedParam *;
+using GAspectParamPtr   = GAspectParam *;
+using GDaemonParamPtr   = GDaemonParam *;
+using GElementParamPtr  = GElementParam *;
 
 using GElementParamKV = std::unordered_map<std::string, GElementParamPtr>;
 

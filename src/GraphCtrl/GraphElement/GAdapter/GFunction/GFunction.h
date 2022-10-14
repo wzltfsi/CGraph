@@ -30,11 +30,11 @@ public:
 
 protected:
     CStatus init() override {
-        return init_function_ ? init_function_() : CStatus();
+        return init_function_    ? init_function_() : CStatus();
     }
 
     CStatus run() override {
-        return run_function_ ? run_function_() : CStatus();
+        return run_function_     ? run_function_() : CStatus();
     }
 
     CStatus destroy() override {

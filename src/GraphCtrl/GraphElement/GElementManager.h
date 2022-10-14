@@ -25,50 +25,25 @@ protected:
     CStatus run() override;
     CStatus destroy() override;
 
-    /**
-     * 判定哪些节点是可以分到一个cluster中的
-     * @return
-     */
+    // 判定哪些节点是可以分到一个cluster中的
     CStatus preRunCheck();
 
-    /**
-     * 将所有的节点，分发到para_cluster_arrs_中，运行的时候使用。
-     * @return
-     */
+    // 将所有的节点，分发到para_cluster_arrs_中，运行的时候使用。
     CStatus analyse();
 
-    /**
-     * 执行完毕后，确认运行是否正常
-     * 正常指的是，所有节点被运行loop次
-     * @param runNodeSize
-     * @return
-     */
+    // 执行完毕后，确认运行是否正常 ,  正常指的是，所有节点被运行loop次
     CStatus afterRunCheck(CSize runNodeSize);
 
-    /**
-     * 添加一个元素信息
-     * @param element
-     * @return
-     */
+    // 添加一个元素信息
     CStatus add(GElementPtr element) override;
 
-    /**
-     * 删除传入元素
-     * @param element
-     */
+    // 删除传入元素
     CStatus remove(GElementPtr element) override;
 
-    /**
-     * 查找传入object
-     * @param element
-     * @return
-     */
+    // 查找传入object
     CBool find(GElementPtr element) const override;
 
-    /**
-     * 清空信息
-     * @return
-     */
+    // 清空信息
     CStatus clear() final;
 
 private:

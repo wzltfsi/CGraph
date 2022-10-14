@@ -30,29 +30,18 @@ public:
     std::mutex _param_shared_lock_;
 #endif
 
-    /**
-     * 保存参数信息
-     * @param path 位置路径
-     * @return
-     */
+    // 保存参数信息
     virtual CStatus dump(const std::string& path) {
         CGRAPH_NO_SUPPORT
     }
 
-    /**
-     * 加载参数信息
-     * @param path 位置路径
-     * @return
-     */
+    //  加载参数信息
     virtual CStatus load(const std::string& path) {
         CGRAPH_NO_SUPPORT
     }
 
 protected:
-    /**
-     * 每次pipeline执行结束，会调用一次reset
-     * @return
-     */
+    // 每次pipeline执行结束，会调用一次reset
     virtual CVoid reset() = 0;
 
     friend class GParamManager;

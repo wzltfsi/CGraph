@@ -20,21 +20,13 @@ CGRAPH_NAMESPACE_BEGIN
 class GPipelineFactory : public CObject {
 
 public:
-    /**
-     * 创建一个pipeline信息
-     * @return
-     */
+    //  创建一个pipeline信息
     static GPipelinePtr create();
 
-    /**
-     * 销毁一个pipeline信息
-     * @return
-     */
+    // 销毁一个pipeline信息
     static CStatus remove(GPipelinePtr pipeline);
 
-    /**
-     * 清空所有的pipeline信息
-     */
+    // 清空所有的pipeline信息
     static CStatus clear();
 
 private:
