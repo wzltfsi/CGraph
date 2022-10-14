@@ -74,10 +74,7 @@ protected:
          * 防止线程初始化失败的情况，导致的崩溃
          * 理论不会走到这个判断逻辑里面
          */
-        if (std::any_of(pool_threads_->begin(), pool_threads_->end(),
-                        [](UThreadPrimary* thd) {
-                            return nullptr == thd;
-                        })) {
+        if (std::any_of(pool_threads_->begin(), pool_threads_->end(),  [](UThreadPrimary* thd) {  return nullptr == thd;  })) {
             CGRAPH_RETURN_ERROR_STATUS("primary thread is null")
         }
 
@@ -95,10 +92,8 @@ protected:
     }
 
 
-    /**
-     * 获取并执行任务
-     * @return
-     */
+     
+    // 获取并执行任务
     CVoid processTask() {
         UTask task;
         if (popTask(task) || popPoolTask(task) || stealTask(task)) {
@@ -109,9 +104,8 @@ protected:
     }
 
 
-    /**
-     * 获取批量执行task信息
-     */
+  
+     // 获取批量执行task信息
     CVoid processTasks() {
         UTaskArr tasks;
         if (popTask(tasks) || popPoolTask(tasks) || stealTask(tasks)) {
@@ -123,53 +117,31 @@ protected:
     }
 
 
-    /**
-     * 从本地弹出一个任务
-     * @param task
-     * @return
-     */
+    // 从本地弹出一个任务
     bool popTask(UTaskRef task) {
         return work_stealing_queue_.tryPop(task);
     }
 
-
-    /**
-     * 从本地弹出一批任务
-     * @param tasks
-     * @return
-     */
+    // 从本地弹出一批任务
     bool popTask(UTaskArrRef tasks) {
         return work_stealing_queue_.tryPop(tasks, config_->max_local_batch_size_);
     }
 
 
-    /**
-     * 从其他线程窃取一个任务
-     * @param task
-     * @return
-     */
+    // 从其他线程窃取一个任务
     bool stealTask(UTaskRef task) {
         if (unlikely(pool_threads_->size() < config_->default_thread_size_)) {
-            /**
-             * 线程池还未初始化完毕的时候，无法进行steal。
-             * 确保程序安全运行。
-             */
+             // 线程池还未初始化完毕的时候，无法进行steal。确保程序安全运行。
             return false;
         }
 
-        /**
-         * 窃取的时候，仅从相邻的primary线程中窃取
-         * 待窃取相邻的数量，不能超过默认primary线程数
-         */
+        
+         // 窃取的时候，仅从相邻的primary线程中窃取。待窃取相邻的数量，不能超过默认primary线程数
         int range = config_->calcStealRange();
         for (int i = 0; i < range; i++) {
-            /**
-            * 从线程中周围的thread中，窃取任务。
-            * 如果成功，则返回true，并且执行任务。
-            */
+            // 从线程中周围的thread中，窃取任务。如果成功，则返回true，并且执行任务。
             int curIndex = (index_ + i + 1) % config_->default_thread_size_;
-            if (nullptr != (*pool_threads_)[curIndex]
-                && ((*pool_threads_)[curIndex])->work_stealing_queue_.trySteal(task)) {
+            if (nullptr != (*pool_threads_)[curIndex]   && ((*pool_threads_)[curIndex])->work_stealing_queue_.trySteal(task)) {
                 return true;
             }
         }
@@ -178,11 +150,7 @@ protected:
     }
 
 
-    /**
-     * 从其他线程盗取一批任务
-     * @param tasks
-     * @return
-     */
+    // 从其他线程盗取一批任务
     bool stealTask(UTaskArrRef tasks) {
         if (unlikely(pool_threads_->size() < config_->default_thread_size_)) {
             return false;
@@ -201,10 +169,10 @@ protected:
     }
 
 private:
-    int index_ {-1};                                               // 线程index
-    UWorkStealingQueue work_stealing_queue_;                       // 内部队列信息
-    std::vector<UThreadPrimary *>* pool_threads_;                  // 用于存放线程池中的线程信息
-
+    int index_ {-1};                                      // 线程index
+    UWorkStealingQueue work_stealing_queue_;              // 内部队列信息
+    std::vector<UThreadPrimary *>* pool_threads_;         // 用于存放线程池中的线程信息
+ 
     friend class UThreadPool;
     friend class UAllocator;
 };

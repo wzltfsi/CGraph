@@ -22,12 +22,12 @@ class UThreadBase : public UThreadObject {
 
 protected:
     explicit UThreadBase() {
-        done_ = true;
-        is_init_ = false;
-        is_running_ = false;
+        done_            = true;
+        is_init_         = false;
+        is_running_      = false;
         pool_task_queue_ = nullptr;
-        pool_priority_task_queue_ = nullptr;
-        config_ = nullptr;
+        pool_priority_task_queue_  = nullptr;
+        config_                    = nullptr;
         total_task_num_ = 0;
     }
 
@@ -37,11 +37,7 @@ protected:
     }
 
 
-    /**
-     * 所有线程类的 destroy 函数应该是一样的
-     * 但是init函数不一样，因为线程构造函数不同
-     * @return
-     */
+   //  所有线程类的 destroy 函数应该是一样的 ,  但是init函数不一样，因为线程构造函数不同
     CStatus destroy() override {
         CGRAPH_FUNCTION_BEGIN
         CGRAPH_ASSERT_INIT(true)
@@ -51,11 +47,7 @@ protected:
     }
 
 
-    /**
-     * 从线程池的队列中，获取任务
-     * @param task
-     * @return
-     */
+    // 从线程池的队列中，获取任务
     virtual bool popPoolTask(UTaskRef task) {
         bool result = pool_task_queue_->tryPop(task);
         if (!result && CGRAPH_THREAD_TYPE_SECONDARY == type_) {
@@ -66,11 +58,7 @@ protected:
     }
 
 
-    /**
-     * 从线程池的队列中中，获取批量任务
-     * @param tasks
-     * @return
-     */
+    // 从线程池的队列中中，获取批量任务
     virtual bool popPoolTask(UTaskArrRef tasks) {
         bool result = pool_task_queue_->tryPop(tasks, config_->max_pool_batch_size_);
         if (!result && CGRAPH_THREAD_TYPE_SECONDARY == type_) {
@@ -80,10 +68,7 @@ protected:
     }
 
 
-    /**
-     * 执行单个任务
-     * @param task
-     */
+    //  执行单个任务
     CVoid runTask(UTask& task) {
         is_running_ = true;
         task();
@@ -92,10 +77,7 @@ protected:
     }
 
 
-    /**
-     * 批量执行任务
-     * @param tasks
-     */
+    // 批量执行任务
     CVoid runTasks(UTaskArr& tasks) {
         is_running_ = true;
         for (auto& task : tasks) {
@@ -106,9 +88,7 @@ protected:
     }
 
 
-    /**
-     * 清空所有任务内容
-     */
+    // 清空所有任务内容
     CVoid reset() {
         done_ = false;
         if (thread_.joinable()) {
@@ -119,10 +99,7 @@ protected:
         total_task_num_ = 0;
     }
 
-
-    /**
-    * 设置线程优先级，仅针对非windows平台使用
-    */
+ // 设置线程优先级，仅针对非windows平台使用
     CVoid setSchedParam() {
 #ifndef _WIN32
         int priority = CGRAPH_THREAD_SCHED_OTHER;
@@ -144,9 +121,7 @@ protected:
 #endif
     }
 
-    /**
-     * 设置线程亲和性，仅针对linux系统
-     */
+    // 设置线程亲和性，仅针对linux系统
     CVoid setAffinity(int index) {
 #ifdef __linux__
         if (!config_->bind_cpu_enable_ || CGRAPH_CPU_NUM == 0 || index < 0) {
@@ -167,44 +142,30 @@ protected:
 
 
 private:
-    /**
-     * 设定计算线程调度策略信息，
-     * 非OTHER/RR/FIFO对应数值，统一返回OTHER类型
-     * @param policy
-     * @return
-     */
+     
+    // 设定计算线程调度策略信息， 非OTHER/RR/FIFO对应数值，统一返回OTHER类型
     [[nodiscard]] static int calcPolicy(int policy) {
-        return (CGRAPH_THREAD_SCHED_OTHER == policy
-                || CGRAPH_THREAD_SCHED_RR == policy
-                || CGRAPH_THREAD_SCHED_FIFO == policy)
-               ? policy : CGRAPH_THREAD_SCHED_OTHER;
+        return (CGRAPH_THREAD_SCHED_OTHER == policy    || CGRAPH_THREAD_SCHED_RR == policy || CGRAPH_THREAD_SCHED_FIFO == policy) ? policy : CGRAPH_THREAD_SCHED_OTHER;
     }
 
 
-    /**
-     * 设定线程优先级信息
-     * 超过[min,max]范围，统一设置为min值
-     * @param priority
-     * @return
-     */
+    // 设定线程优先级信息 , 超过[min,max]范围，统一设置为min值
     [[nodiscard]] static int calcPriority(int priority) {
-        return (priority >= CGRAPH_THREAD_MIN_PRIORITY
-                && priority <= CGRAPH_THREAD_MAX_PRIORITY)
-               ? priority : CGRAPH_THREAD_MIN_PRIORITY;
+        return (priority >= CGRAPH_THREAD_MIN_PRIORITY  && priority <= CGRAPH_THREAD_MAX_PRIORITY) ? priority : CGRAPH_THREAD_MIN_PRIORITY;
     }
 
 
 protected:
-    bool done_;                                                        // 线程状态标记
-    bool is_init_;                                                     // 标记初始化状态
-    bool is_running_;                                                  // 是否正在执行
-    int type_ = 0;                                                     // 用于区分线程类型（主线程、辅助线程）
-    unsigned long total_task_num_ = 0;                                 // 处理的任务的数字
+    bool done_;                                                         // 线程状态标记
+    bool is_init_;                                                      // 标记初始化状态
+    bool is_running_;                                                   // 是否正在执行
+    int  type_ = 0;                                                     // 用于区分线程类型（主线程、辅助线程）
+    unsigned long total_task_num_ = 0;                                  // 处理的任务的数字
 
-    UAtomicQueue<UTask>* pool_task_queue_;                             // 用于存放线程池中的普通任务
-    UAtomicPriorityQueue<UTask>* pool_priority_task_queue_;            // 用于存放线程池中的包含优先级任务的队列，仅辅助线程可以执行
-    UThreadPoolConfigPtr config_ = nullptr;                            // 配置参数信息
-    std::thread thread_;                                               // 线程类
+    UAtomicQueue<UTask>* pool_task_queue_;                              // 用于存放线程池中的普通任务
+    UAtomicPriorityQueue<UTask>* pool_priority_task_queue_;             // 用于存放线程池中的包含优先级任务的队列，仅辅助线程可以执行
+    UThreadPoolConfigPtr config_ = nullptr;                             // 配置参数信息
+    std::thread thread_;                                                // 线程类
 };
 
 CGRAPH_NAMESPACE_END

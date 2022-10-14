@@ -12,7 +12,6 @@ CGRAPH_NAMESPACE_BEGIN
 
 GCluster::GCluster() = default;
 
-
 GCluster::~GCluster() = default;
 
 

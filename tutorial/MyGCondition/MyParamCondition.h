@@ -15,11 +15,8 @@
 class MyParamCondition : public CGraph::GCondition {
 
 public:
-    /**
-     * 在这里主要演示condition中可以通过获取上方参数的形式，
-     * 来决定执行执行当前的第几个逻辑
-     * @return
-     */
+  
+     // 在这里主要演示condition中可以通过获取上方参数的形式，来决定执行执行当前的第几个逻辑
     CIndex choose () override {
         auto* myParam = CGRAPH_GET_GPARAM(MyParam, "param1")
         if (nullptr == myParam) {

@@ -13,20 +13,14 @@ CGRAPH_NAMESPACE_BEGIN
 
 class GFunction : public GAdapter {
 public:
-    /**
-     * 设置执行函数具体内容
-     * @param type
-     * @param func
-     * @return
-     */
-    GFunction* setFunction(const CFunctionType& type,
-                           CGRAPH_CSTATUS_CONST_FUNCTION_REF func) {
+    // 设置执行函数具体内容
+    GFunction* setFunction(const CFunctionType& type, CGRAPH_CSTATUS_CONST_FUNCTION_REF func) {
         CGRAPH_ASSERT_INIT_RETURN_NULL(false)
         CGRAPH_ASSERT_NOT_NULL_RETURN_NULL(func)
 
         switch (type) {
-            case CFunctionType::INIT: init_function_ = func; break;
-            case CFunctionType::RUN: run_function_ = func; break;
+            case CFunctionType::INIT:    init_function_    = func; break;
+            case CFunctionType::RUN:     run_function_     = func; break;
             case CFunctionType::DESTROY: destroy_function_ = func; break;
             default: return nullptr;     // 不可能出现的情况
         }
@@ -48,8 +42,8 @@ protected:
     }
 
 private:
-    CGRAPH_CSTATUS_FUNCTION init_function_ = nullptr;
-    CGRAPH_CSTATUS_FUNCTION run_function_ = nullptr;
+    CGRAPH_CSTATUS_FUNCTION init_function_    = nullptr;
+    CGRAPH_CSTATUS_FUNCTION run_function_     = nullptr;
     CGRAPH_CSTATUS_FUNCTION destroy_function_ = nullptr;
 
     friend class GPipeline;

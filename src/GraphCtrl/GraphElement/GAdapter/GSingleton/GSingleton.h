@@ -22,15 +22,7 @@ protected:
     CStatus run() override;
     CStatus destroy() override;
 
-    /**
-     * 适配singleton信息
-     * @param dependElements
-     * @param name
-     * @param loop
-     * @param level
-     * @param paramManager
-     * @return
-     */
+    // 适配singleton信息
     CStatus setElementInfo(const std::set<GElementPtr> &dependElements,
                            const std::string &name,
                            CSize loop,

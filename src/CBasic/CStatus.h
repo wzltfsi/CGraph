@@ -50,11 +50,7 @@ public:
             return (*this);
         }
 
-        error_info_ = this->isOK()
-                ? cur.error_info_
-                : (cur.isOK()
-                    ? error_info_
-                    : (error_info_ + STATUS_ERROR_INFO_CONNECTOR + cur.error_info_));
+        error_info_ = this->isOK()  ? cur.error_info_  : (cur.isOK()  ? error_info_  : (error_info_ + STATUS_ERROR_INFO_CONNECTOR + cur.error_info_));
         error_code_ = STATUS_ERR;
 
         return (*this);

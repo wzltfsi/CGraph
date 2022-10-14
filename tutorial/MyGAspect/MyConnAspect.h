@@ -49,7 +49,7 @@ protected:
     }
 
 private:
-    bool conn_status_ { false };                    // 表示连接状态
+    bool conn_status_ { false };      // 表示连接状态
 };
 
 #include "../../src/CGraph.h"

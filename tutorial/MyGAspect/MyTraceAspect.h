@@ -35,8 +35,7 @@ public:
         if (!curStatus.isOK()) {
             CGraph::CGRAPH_ECHO("----> [MyTraceAspect] [%s] run finished, status is ok ...", this->getName().c_str());
         } else {
-            CGraph::CGRAPH_ECHO("----> [MyTraceAspect] [%s] run finished, error code is [%d] ...", this->getName().c_str(),
-                                curStatus.getCode());
+            CGraph::CGRAPH_ECHO("----> [MyTraceAspect] [%s] run finished, error code is [%d] ...", this->getName().c_str(),    curStatus.getCode());
         }
     }
 
@@ -46,8 +45,7 @@ public:
     }
 
     CVoid finishDestroy(const CStatus& curStatus) override {
-        CGraph::CGRAPH_ECHO("----> [MyTraceAspect] [%s] destroy finished, error code is [%d] ...", this->getName().c_str(),
-                            curStatus.getCode());
+        CGraph::CGRAPH_ECHO("----> [MyTraceAspect] [%s] destroy finished, error code is [%d] ...", this->getName().c_str(),   curStatus.getCode());
     }
 };
 

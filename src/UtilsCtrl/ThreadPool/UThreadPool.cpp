@@ -63,11 +63,7 @@ CStatus UThreadPool::init() {
     }
     CGRAPH_FUNCTION_CHECK_STATUS
 
-    /**
-     * 策略更新：
-     * 初始化的时候，也可以创建n个辅助线程。目的是为了配合仅使用 pool中 priority_queue 的场景
-     * 一般情况下，建议为0。
-     */
+    //  策略更新： 初始化的时候，也可以创建n个辅助线程。目的是为了配合仅使用 pool中 priority_queue 的场景,一般情况下，建议为0。
     status = createSecondaryThread(config_.secondary_thread_size_);
     CGRAPH_FUNCTION_CHECK_STATUS
 
@@ -86,14 +82,13 @@ CStatus UThreadPool::submit(const UTaskGroup& taskGroup, CMSec ttl) {
     }
 
     // 计算最终运行时间信息
-    auto deadline = std::chrono::system_clock::now()
-                    + std::chrono::milliseconds(std::min(taskGroup.getTtl(), ttl));
+    auto deadline = std::chrono::system_clock::now()  + std::chrono::milliseconds(std::min(taskGroup.getTtl(), ttl));
 
     for (auto& fut : futures) {
         const auto& futStatus = fut.wait_until(deadline);
         switch (futStatus) {
             case std::future_status::ready: break;    // 正常情况，直接返回了
-            case std::future_status::timeout: status += CStatus("thread status timeout"); break;
+            case std::future_status::timeout: status  += CStatus("thread status timeout"); break;
             case std::future_status::deferred: status += CStatus("thread status deferred"); break;
             default: status += CStatus("thread status unknown");
         }
@@ -107,8 +102,7 @@ CStatus UThreadPool::submit(const UTaskGroup& taskGroup, CMSec ttl) {
 }
 
 
-CStatus UThreadPool::submit(CGRAPH_DEFAULT_CONST_FUNCTION_REF func, CMSec ttl,
-                            CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished) {
+CStatus UThreadPool::submit(CGRAPH_DEFAULT_CONST_FUNCTION_REF func, CMSec ttl,   CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished) {
     return submit(UTaskGroup(func, ttl, onFinished));
 }
 
@@ -146,10 +140,7 @@ CIndex UThreadPool::dispatch(CIndex origIndex) {
 
     CIndex realIndex = 0;
     if (CGRAPH_DEFAULT_TASK_STRATEGY == origIndex) {
-        /**
-         * 如果是默认策略信息，在[0, default_thread_size_) 之间的，通过 thread 中queue来调度
-         * 在[default_thread_size_, max_thread_size_) 之间的，通过 pool 中的queue来调度
-         */
+        // 如果是默认策略信息，在[0, default_thread_size_) 之间的，通过 thread 中 queue来调度,在[default_thread_size_, max_thread_size_) 之间的，通过 pool 中的queue来调度
         realIndex = cur_index_++;
         if (cur_index_ >= config_.max_thread_size_ || cur_index_ < 0) {
             cur_index_ = 0;
@@ -191,8 +182,7 @@ CVoid UThreadPool::monitor() {
         }
 
         // 如果 primary线程都在执行，则表示忙碌
-        bool busy = std::all_of(primary_threads_.begin(), primary_threads_.end(),
-                                [](UThreadPrimaryPtr ptr) { return nullptr != ptr && ptr->is_running_; });
+        bool busy = std::all_of(primary_threads_.begin(), primary_threads_.end(),  [](UThreadPrimaryPtr ptr) { return nullptr != ptr && ptr->is_running_; });
 
         // 如果忙碌或者priority_task_queue_中有任务，则需要添加 secondary线程
         if (busy || !priority_task_queue_.empty()) {

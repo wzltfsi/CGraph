@@ -17,21 +17,16 @@ CGRAPH_NAMESPACE_BEGIN
 class GDaemonObject : public GraphObject {
 
 protected:
-    /**
-     * 设置参数管理器，这里是统一设置。入参可以为空
-     * @param pm
-     * @return
-     */
+    
+    // 设置参数管理器，这里是统一设置。入参可以为空
     virtual GDaemonObject* setPipelineParamManager(GParamManagerPtr pm) {
         CGRAPH_ASSERT_NOT_NULL_RETURN_NULL(pm)
         this->pipeline_param_manager_ = pm;
         return this;
     }
 
-    /**
-     * 设置休眠时间信息，单位ms
-     * @return
-     */
+    
+    // 设置休眠时间信息，单位ms
     virtual GDaemonObject* setInterval(CMSec interval) {
         if (0 == interval) {
             return this;
@@ -42,10 +37,7 @@ protected:
     }
 
 private:
-    /**
-     * 所有Daemon均不执行run方法
-     * @return
-     */
+    // 所有Daemon均不执行run方法
     CStatus run() final {
         CGRAPH_NO_SUPPORT
     }

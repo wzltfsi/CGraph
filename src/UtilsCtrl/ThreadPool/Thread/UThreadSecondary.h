@@ -35,13 +35,7 @@ protected:
     }
 
 
-    /**
-     * 设置pool的信息
-     * @param poolTaskQueue
-     * @param poolPriorityTaskQueue
-     * @param config
-     * @return
-     */
+    //  设置pool的信息
     CStatus setThreadPoolInfo(UAtomicQueue<UTask>* poolTaskQueue,
                               UAtomicPriorityQueue<UTask>* poolPriorityTaskQueue,
                               UThreadPoolConfigPtr config) {
@@ -77,10 +71,9 @@ protected:
     }
 
 
-    /**
-     * 任务执行函数，从线程池的任务队列中获取信息
-     */
-    CVoid processTask() {
+  
+    // 任务执行函数，从线程池的任务队列中获取信息
+     CVoid processTask() {
         UTask task;
         if (popPoolTask(task)) {
             runTask(task);
@@ -90,9 +83,8 @@ protected:
     }
 
 
-    /**
-     * 批量执行n个任务
-     */
+   
+    // 批量执行n个任务
     CVoid processTasks() {
         UTaskArr tasks;
         if (popPoolTask(tasks)) {
@@ -103,10 +95,8 @@ protected:
     }
 
 
-    /**
-     * 判断本线程是否需要被自动释放
-     * @return
-     */
+    
+    // 判断本线程是否需要被自动释放
     bool freeze() {
         if (likely(is_running_)) {
             cur_ttl_++;
@@ -119,7 +109,7 @@ protected:
     }
 
 private:
-    int cur_ttl_ = 0;                                                      // 当前最大生存周期
+    int cur_ttl_ = 0;        // 当前最大生存周期
 
     friend class UThreadPool;
 };

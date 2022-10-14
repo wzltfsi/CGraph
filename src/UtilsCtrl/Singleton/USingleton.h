@@ -14,8 +14,7 @@
 
 CGRAPH_NAMESPACE_BEGIN
 
-template<typename T,
-        USingletonType type = USingletonType::HUNGRY>
+template<typename T,    USingletonType type = USingletonType::HUNGRY>
 class USingleton : public UtilsObject {
 public:
     explicit USingleton() {

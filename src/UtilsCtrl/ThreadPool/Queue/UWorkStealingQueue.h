@@ -67,8 +67,7 @@ public:
      * @param maxLocalBatchSize
      * @return
      */
-    CBool tryPop(UTaskArrRef taskArr,
-                 int maxLocalBatchSize) {
+    CBool tryPop(UTaskArrRef taskArr,  int maxLocalBatchSize) {
         bool result = false;
         if (mutex_.try_lock()) {
             while (!deque_.empty() && maxLocalBatchSize--) {

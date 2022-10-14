@@ -32,9 +32,7 @@ class UTask : public UThreadObject {
 
 public:
     template<typename F>
-    UTask(F&& f, int priority = 0)
-        : impl_(new taskDerided<F>(std::forward<F>(f)))
-        , priority_(priority) {}
+    UTask(F&& f, int priority = 0)  : impl_(new taskDerided<F>(std::forward<F>(f)))  , priority_(priority) {}
 
     CVoid operator()() {
         if (likely(impl_)) {

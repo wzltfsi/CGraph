@@ -26,61 +26,39 @@ public:
      * @param ttl
      * @param onFinished
      */
-    explicit UTaskGroup(CGRAPH_DEFAULT_CONST_FUNCTION_REF task,
-                        CMSec ttl = CGRAPH_MAX_BLOCK_TTL,
-                        CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished = nullptr) noexcept {
-        this->addTask(task)
-            ->setTtl(ttl)
-            ->setOnFinished(onFinished);
+    explicit UTaskGroup(CGRAPH_DEFAULT_CONST_FUNCTION_REF task,   CMSec ttl = CGRAPH_MAX_BLOCK_TTL,  CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished = nullptr) noexcept {
+        this->addTask(task)->setTtl(ttl)->setOnFinished(onFinished);
     }
 
-    /**
-     * 添加一个任务
-     * @param task
-     */
+    //  添加一个任务
     UTaskGroup* addTask(CGRAPH_DEFAULT_CONST_FUNCTION_REF task) {
         task_arr_.emplace_back(task);
         return this;
     }
 
-    /**
-     * 设置任务最大超时时间
-     * @param ttl
-     */
+    // 设置任务最大超时时间
     UTaskGroup* setTtl(CMSec ttl) {
         this->ttl_ = ttl;
         return this;
     }
 
-    /**
-     * 设置执行完成后的回调函数
-     * @param onFinished
-     * @return
-     */
+    // 设置执行完成后的回调函数
     UTaskGroup* setOnFinished(CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished) {
         this->on_finished_ = onFinished;
         return this;
     }
 
-    /**
-     * 获取最大超时时间信息
-     * @return
-     */
+    //获取最大超时时间信息
     [[nodiscard]] CMSec getTtl() const {
         return this->ttl_;
     }
 
-    /**
-     * 清空任务组
-     */
+    // 清空任务组
     CVoid clear() {
         task_arr_.clear();
     }
 
-    /**
-     * 获取任务组大小
-     * @return
-     */
+    // 获取任务组大小
     [[nodiscard]] CSize getSize() const {
         auto size = task_arr_.size();
         return size;

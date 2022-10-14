@@ -17,10 +17,8 @@ public:
     CStatus beginRun() override {
         CStatus status;
 
-        /**
-         * 在切面层，获取pipeline中的参数值信息，进行一些逻辑处理
-         * 可以用于异常判断、限流等逻辑
-         * */
+      
+        // 在切面层，获取pipeline中的参数值信息，进行一些逻辑处理， 可以用于异常判断、限流等逻辑
         auto* pipelineParam = CGRAPH_GET_GPARAM(MyParam, "param1")
         if (nullptr == pipelineParam) {
             return CStatus("pipelineParam is null");
@@ -31,9 +29,7 @@ public:
         CGraph::CGRAPH_ECHO("----> [MyPipelineParamAspect] pipeline param iCount is [%d] before run.", cnt);
 
         if (cnt < 0) {
-            /** 模拟：在切面中，对pipeline中的参数，做一些异常值的处理逻辑
-             * 在 beginRun() 切面中 返回非STATUS_OK值，则pipeline停止执行
-             * */
+            // 模拟：在切面中，对pipeline中的参数，做一些异常值的处理逻辑， 在 beginRun() 切面中 返回非STATUS_OK值，则pipeline停止执行
             return CStatus("aspect demo error");
         }
 
