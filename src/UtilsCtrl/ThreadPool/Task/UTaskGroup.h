@@ -20,12 +20,7 @@ public:
     explicit UTaskGroup() = default;
     CGRAPH_NO_ALLOWED_COPY(UTaskGroup)
 
-    /**
-     * 直接通过函数来申明taskGroup
-     * @param task
-     * @param ttl
-     * @param onFinished
-     */
+    // 直接通过函数来申明taskGroup
     explicit UTaskGroup(CGRAPH_DEFAULT_CONST_FUNCTION_REF task,   CMSec ttl = CGRAPH_MAX_BLOCK_TTL,  CGRAPH_CALLBACK_CONST_FUNCTION_REF onFinished = nullptr) noexcept {
         this->addTask(task)->setTtl(ttl)->setOnFinished(onFinished);
     }

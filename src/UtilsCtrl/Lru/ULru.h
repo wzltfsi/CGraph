@@ -30,11 +30,8 @@ public:
         clear();
     }
 
-    /**
-     * 信息插入Lru
-     * @param key
-     * @param value
-     */
+
+    // 信息插入Lru
     CVoid put(const K& key, const V& value) {
         auto cur = cache_.find(key);
         if (cur != cache_.end()) {
@@ -55,11 +52,7 @@ public:
         cur_size_++;
     }
 
-    /**
-     * 从Lru中获取节点信息
-     * @param key
-     * @return
-     */
+    // 从Lru中获取节点信息
     V get(const K& key) {
         V result;
         auto cur = cache_.find(key);
@@ -71,25 +64,17 @@ public:
         return result;
     }
 
-    /**
-     * 设置capacity信息
-     * @param capacity
-     */
+    // 设置capacity信息
     CVoid setCapacity(CSize capacity) {
         this->capacity_ = capacity;
     }
 
-    /**
-     * 获取capacity信息
-     * @return
-     */
+    // 获取capacity信息
     CSize getCapacity() {
         return this->capacity_;
     }
 
-    /**
-     * 清空Lru中的信息
-     */
+    // 清空Lru中的信息
     CVoid clear() {
         nodes_.clear();
         cache_.clear();

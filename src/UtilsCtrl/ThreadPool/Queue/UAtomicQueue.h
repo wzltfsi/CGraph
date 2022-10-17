@@ -24,10 +24,7 @@ class UAtomicQueue : public UQueueObject {
 public:
     UAtomicQueue() = default;
 
-    /**
-     * 等待弹出
-     * @param value
-     */
+    // 等待弹出
     CVoid waitPop(T& value) {
         CGRAPH_UNIQUE_LOCK lk(mutex_);
         cv_.wait(lk, [this] { return !queue_.empty(); });
@@ -36,11 +33,7 @@ public:
     }
 
 
-    /**
-     * 尝试弹出
-     * @param value
-     * @return
-     */
+    // 尝试弹出
     CBool tryPop(T& value) {
         CGRAPH_LOCK_GUARD lk(mutex_);
         if (queue_.empty()) {
@@ -52,12 +45,7 @@ public:
     }
 
 
-    /**
-     * 尝试弹出多个任务
-     * @param values
-     * @param maxPoolBatchSize
-     * @return
-     */
+    // 尝试弹出多个任务
     CBool tryPop(std::vector<T>& values, int maxPoolBatchSize) {
         CGRAPH_LOCK_GUARD lk(mutex_);
         if (queue_.empty() || maxPoolBatchSize <= 0) {
@@ -73,10 +61,7 @@ public:
     }
 
 
-    /**
-     * 阻塞式等待弹出
-     * @return
-     */
+    //  阻塞式等待弹出
     std::unique_ptr<T> waitPop() {
         CGRAPH_UNIQUE_LOCK lk(mutex_);
         cv_.wait(lk, [this] { return !queue_.empty(); });
@@ -86,10 +71,7 @@ public:
     }
 
 
-    /**
-     * 非阻塞式等待弹出
-     * @return
-     */
+    // 非阻塞式等待弹出
     std::unique_ptr<T> tryPop() {
         CGRAPH_LOCK_GUARD lk(mutex_);
         if (queue_.empty()) { return std::unique_ptr<T>(); }
@@ -99,10 +81,7 @@ public:
     }
 
 
-    /**
-     * 传入数据
-     * @param value
-     */
+    // 传入数据
     CVoid push(T&& value) {
         std::unique_ptr<T> task(std::make_unique<T>(std::move(value)));
         CGRAPH_LOCK_GUARD lk(mutex_);
@@ -111,10 +90,7 @@ public:
     }
 
 
-    /**
-     * 判定队列是否为空
-     * @return
-     */
+    //  判定队列是否为空
     [[nodiscard]] CBool empty() {
         CGRAPH_LOCK_GUARD lk(mutex_);
         return queue_.empty();

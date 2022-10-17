@@ -23,10 +23,7 @@ class UWorkStealingQueue : public UQueueObject {
 public:
     UWorkStealingQueue() = default;
 
-    /**
-     * 向队列中写入信息
-     * @param task
-     */
+    // 向队列中写入信息
     CVoid push(UTask&& task) {
         while (true) {
             if (mutex_.try_lock()) {
@@ -40,11 +37,7 @@ public:
     }
 
 
-    /**
-     * 弹出节点，从头部进行
-     * @param task
-     * @return
-     */
+    // 弹出节点，从头部进行
     CBool tryPop(UTask& task) {
         // 这里不使用raii锁，主要是考虑到多线程的情况下，可能会重复进入
         bool result = false;
@@ -61,12 +54,7 @@ public:
     }
 
 
-    /**
-     * 从头部开始批量获取可执行任务信息
-     * @param taskArr
-     * @param maxLocalBatchSize
-     * @return
-     */
+    // 从头部开始批量获取可执行任务信息
     CBool tryPop(UTaskArrRef taskArr,  int maxLocalBatchSize) {
         bool result = false;
         if (mutex_.try_lock()) {
@@ -82,11 +70,7 @@ public:
     }
 
 
-    /**
-     * 窃取节点，从尾部进行
-     * @param task
-     * @return
-     */
+    // 窃取节点，从尾部进行
     CBool trySteal(UTask& task) {
         bool result = false;
         if (mutex_.try_lock()) {
@@ -102,11 +86,7 @@ public:
     }
 
 
-    /**
-     * 批量窃取节点，从尾部进行
-     * @param taskArr
-     * @return
-     */
+    // 批量窃取节点，从尾部进行
     CBool trySteal(UTaskArrRef taskArr, int maxStealBatchSize) {
         bool result = false;
         if (mutex_.try_lock()) {

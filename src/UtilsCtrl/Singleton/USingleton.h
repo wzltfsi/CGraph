@@ -28,10 +28,7 @@ public:
         clear();
     }
 
-    /**
-     * 获取singleton句柄信息
-     * @return
-     */
+    // 获取singleton句柄信息
     T* get() {
         if constexpr (USingletonType::LAZY == type) {
             create();

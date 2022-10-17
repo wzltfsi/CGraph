@@ -17,36 +17,13 @@ CGRAPH_NAMESPACE_BEGIN
 template<typename TSrc, typename TRes = TSrc>
 class UDistance : public UDistanceObject {
 public:
-    /**
-     * 计算距离信息
-     * @param v1 向量1
-     * @param v2 向量2
-     * @param dim1 向量1的维度
-     * @param dim2 向量2的维度
-     * @param result 结果信息
-     * @param ext 可扩展信息
-     * @return
-     */
+    // 计算距离信息   v1 向量1  v2 向量2  , dim1 向量1的维度 dim2 向量2的维度  ,  result 结果信息 ext 可扩展信息
     virtual CStatus calc(const TSrc* v1, const TSrc* v2, CSize dim1, CSize dim2, TRes& result, CVoidPtr ext) = 0;
 
-    /**
-     * 判断入参信息是否符合
-     * @param v1
-     * @param v2
-     * @param dim1
-     * @param dim2
-     * @param ext
-     * @return
-     */
+    // 判断入参信息是否符合
     virtual CStatus check(const TSrc* v1, const TSrc* v2, CSize dim1, CSize dim2, CVoidPtr ext);
 
-    /**
-     * 将数据归一化
-     * @param v
-     * @param dim
-     * @param ext
-     * @return
-     */
+    // 将数据归一化
     virtual CStatus normalize(TSrc* v, CSize dim, CVoidPtr ext);
 };
 

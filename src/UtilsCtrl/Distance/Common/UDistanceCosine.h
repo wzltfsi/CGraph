@@ -24,8 +24,8 @@ public:
         TSrc val2 = 0;
         for (CSize i = 0; i < dim1; i++) {
             result += (v1[i] * v2[i]);
-            val1 += (v1[i] * v1[i]);
-            val2 += (v2[i] * v2[i]);
+            val1   += (v1[i] * v1[i]);
+            val2   += (v2[i] * v2[i]);
         }
 
         result = result / (std::sqrt(val1) * std::sqrt(val2));

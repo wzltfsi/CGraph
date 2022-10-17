@@ -19,8 +19,8 @@ CGRAPH_NAMESPACE_BEGIN
 class UTask : public UThreadObject {
     struct taskBased {
         explicit taskBased() = default;
-        virtual CVoid call() = 0;
-        virtual ~taskBased() = default;
+        virtual  CVoid call() = 0;
+        virtual  ~taskBased() = default;
     };
 
     template<typename F>
@@ -42,12 +42,10 @@ public:
 
     UTask() = default;
 
-    UTask(UTask&& task) noexcept:
-            impl_(std::move(task.impl_)),
-            priority_(task.priority_) {}
+    UTask(UTask&& task) noexcept: impl_(std::move(task.impl_)),  priority_(task.priority_) {}
 
     UTask &operator=(UTask&& task) noexcept {
-        impl_ = std::move(task.impl_);
+        impl_     = std::move(task.impl_);
         priority_ = task.priority_;
         return *this;
     }

@@ -20,11 +20,7 @@ class UAtomicPriorityQueue : public UQueueObject {
 public:
     UAtomicPriorityQueue() = default;
 
-    /**
-     * 尝试弹出
-     * @param value
-     * @return
-     */
+    // 尝试弹出
     CBool tryPop(T& value) {
         CGRAPH_LOCK_GUARD lk(mutex_);
         if (priority_queue_.empty()) {
@@ -36,12 +32,7 @@ public:
     }
 
 
-    /**
-     * 尝试弹出多个任务
-     * @param values
-     * @param maxPoolBatchSize
-     * @return
-     */
+    // 尝试弹出多个任务
     CBool tryPop(std::vector<T>& values, int maxPoolBatchSize) {
         CGRAPH_LOCK_GUARD lk(mutex_);
         if (priority_queue_.empty() || maxPoolBatchSize <= 0) {
@@ -57,12 +48,7 @@ public:
     }
 
 
-    /**
-     * 传入数据
-     * @param value
-     * @param priority 任务优先级，数字排序
-     * @return
-     */
+    // 传入数据
     CVoid push(T&& value, int priority) {
         std::unique_ptr<T> task(std::make_unique<T>(std::move(value), priority));
         CGRAPH_LOCK_GUARD lk(mutex_);
@@ -70,10 +56,7 @@ public:
     }
 
 
-    /**
-     * 判定队列是否为空
-     * @return
-     */
+    // 判定队列是否为空
     [[nodiscard]] CBool empty() {
         CGRAPH_LOCK_GUARD lk(mutex_);
         return priority_queue_.empty();

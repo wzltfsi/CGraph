@@ -103,13 +103,13 @@ protected:
     CVoid setSchedParam() {
 #ifndef _WIN32
         int priority = CGRAPH_THREAD_SCHED_OTHER;
-        int policy = CGRAPH_THREAD_MIN_PRIORITY;
+        int policy   = CGRAPH_THREAD_MIN_PRIORITY;
         if (type_ == CGRAPH_THREAD_TYPE_PRIMARY) {
             priority = config_->primary_thread_priority_;
-            policy = config_->primary_thread_policy_;
+            policy   = config_->primary_thread_policy_;
         } else if (type_ == CGRAPH_THREAD_TYPE_SECONDARY) {
             priority = config_->secondary_thread_priority_;
-            policy = config_->secondary_thread_policy_;
+            policy   = config_->secondary_thread_policy_;
         }
 
         auto handle = thread_.native_handle();
@@ -156,16 +156,16 @@ private:
 
 
 protected:
-    bool done_;                                                         // 线程状态标记
-    bool is_init_;                                                      // 标记初始化状态
-    bool is_running_;                                                   // 是否正在执行
-    int  type_ = 0;                                                     // 用于区分线程类型（主线程、辅助线程）
-    unsigned long total_task_num_ = 0;                                  // 处理的任务的数字
+    bool done_;                                                // 线程状态标记
+    bool is_init_;                                             // 标记初始化状态
+    bool is_running_;                                          // 是否正在执行
+    int  type_ = 0;                                            // 用于区分线程类型（主线程、辅助线程）
+    unsigned long total_task_num_ = 0;                         // 处理的任务的数字
 
-    UAtomicQueue<UTask>* pool_task_queue_;                              // 用于存放线程池中的普通任务
-    UAtomicPriorityQueue<UTask>* pool_priority_task_queue_;             // 用于存放线程池中的包含优先级任务的队列，仅辅助线程可以执行
-    UThreadPoolConfigPtr config_ = nullptr;                             // 配置参数信息
-    std::thread thread_;                                                // 线程类
+    UAtomicQueue<UTask>* pool_task_queue_;                      // 用于存放线程池中的普通任务
+    UAtomicPriorityQueue<UTask>* pool_priority_task_queue_;     // 用于存放线程池中的包含优先级任务的队列，仅辅助线程可以执行
+    UThreadPoolConfigPtr config_ = nullptr;                     // 配置参数信息
+    std::thread thread_;                                        // 线程类
 };
 
 CGRAPH_NAMESPACE_END
